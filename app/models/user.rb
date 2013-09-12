@@ -4,20 +4,19 @@ class User < ActiveRecord::Base
 
 
 	def proficiency_for(skill)
-		self.user_skills.each do |userskill|
-			if userskill.skill_id == skill.id
-				return userskill.proficiency
-			end
-		end
+		self.user_skills.find_by_skill_id(skill.id).proficiency
 	end
 
 	def set_proficiency_for(skill,proficiency)
-		self.user_skills.each do |userskill|
-			if userskill.skill_id == skill.id
-				userskill.proficiency = proficiency
-				userskill.save
-			end
-		end
+		a = self.user_skills.find_by_skill_id(skill.id)
+		a.update_attributes(proficiency: proficiency)
 	end
 
 end
+
+		# self.user_skills.each do |userskill|
+		# 	if userskill.skill_id == skill.id
+		# 		userskill.proficiency = proficiency
+		# 		userskill.save
+		# 	end
+		# end
